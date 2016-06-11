@@ -8,7 +8,7 @@ import ddf.minim.ugens.*;
 
 
 float x,y,z;
-int n = 1000;
+int n = 1500;
 float rad;
 float r;
 float a = 0;
@@ -54,7 +54,7 @@ void setup() {
 void draw() {
   
   moonlander.update();
-  //double moon = moonlander.getIntValue("calue");
+  double moon = moonlander.getIntValue("genie");
   double f_sel = moonlander.getValue("function_select");
   double value = moonlander.getValue("my_track");
   
@@ -74,7 +74,13 @@ void draw() {
   }
   
   if(f_sel >= 4 && f_sel < 5){
-    mid_rec(value, 0, 0);
+    mid_rec(m, 0, 0, 1, 255);
+    side_rec(m);
+    points(v);
+    if(moon >= 1){
+      mid_rec(m, 0, 0, 3, 0);
+      lines(l, moon);
+    }
   }
   //side_rec(m);
   //mid_rec(m, -150, -150);
@@ -82,9 +88,7 @@ void draw() {
   //mid_rec(m, 150, -150);
   //mid_rec(m, 150, 150);
   //points(v);
-  if(f_sel >= 4.5 && f_sel < 5){
-    lines(l, m);
-  }
+
   
   if(f_sel >= 2 && f_sel < 3)
   {
@@ -120,26 +124,24 @@ void draw() {
   }
 }
 //s(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)
-void mid_rec(double m, int dx, int dy) {
+void mid_rec(int m, int dx, int dy, int sw, int col) {
  pushMatrix(); 
     translate(x+dx,y+dy,z);
     noFill();
-    stroke(255);
-    rotate((int)m*30);
-   //scale();
-    rect(-50,-50,100,100);
+    stroke(col);
+    strokeWeight(sw);
+    rotate(m*30);
+    rect(-75,-75,150,150);
   popMatrix();
 }
 
 void side_rec(int m) {
  pushMatrix();
-    translate(x,y,z);
-    if (frameCount >= 90 && frameCount <= 450){  
+    translate(x,y,z);  
       noFill();
       stroke(255);
       rotate(m*100);
-      rect(-200,-200,100,100);
-    }
+      rect(-300,-300,150,150);
   popMatrix(); 
 }
 
@@ -154,12 +156,12 @@ void points(PVector v[]){
   popMatrix(); 
 }
 
-void lines(PVector v[], int m){
+void lines(PVector v[], double m){
   pushMatrix();
     translate(x,y,z);
     stroke(255);
-    for(int p = 0; p < n/2; p++) {
-      v[p].setMag(m/70);
+    for(int p = 0; p < n/4  ; p++) {
+      v[p].setMag((int)m*400/70);
       v[p].div(0.992);
       line(0, 0, v[p].x*-1, v[p].y*-1);
     }
