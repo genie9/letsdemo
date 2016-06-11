@@ -43,7 +43,14 @@ void draw() {
   //int col = color(128*(sin((float)moon/8.0)));
   background(0);
   
-  pushMatrix(); 
+  mid_rec(m);
+  side_rec(m);
+  points(v);
+  lines(l, m);
+}
+
+void mid_rec(int m) {
+ pushMatrix(); 
     translate(x,y,z);
     //float i = 0.3;
     noFill();
@@ -52,9 +59,11 @@ void draw() {
     rotate(m*30);
    //scale();
     rect(-50,-50,100,100);
-  popMatrix();
-  
-  pushMatrix();
+  popMatrix(); 
+}
+
+void side_rec(int m) {
+ pushMatrix();
     translate(x,y,z);
     if (frameCount >= 90 && frameCount <= 250){  
       noFill();
@@ -62,10 +71,7 @@ void draw() {
       rotate(m*100);
       rect(-200,-200,100,100);
     }
-  popMatrix();
-
-  points(v);
-  lines(l, m);
+  popMatrix(); 
 }
 
 void points(PVector v[]){
