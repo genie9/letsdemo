@@ -1,14 +1,21 @@
-<sync rows="128">
+<sync rows="2000">
 	<tracks>
+		<track name="calue"/>
 		<track name="function_select">
-			<key row="0" value="1" interpolation="1"/>
-			<key row="45" value="1" interpolation="0"/>
-			<key row="46" value="2" interpolation="0"/>
-			<key row="127" value="2" interpolation="0"/>
+			<key row="16" value="1" interpolation="1"/>
+			<key row="155" value="2" interpolation="1"/>
+			<key row="304" value="3" interpolation="1"/>
+			<key row="576" value="4" interpolation="1"/>
+			<key row="848" value="5" interpolation="1"/>
+			<key row="984" value="6" interpolation="1"/>
+			<key row="1120" value="7" interpolation="1"/>
+			<key row="1390" value="8" interpolation="0"/>
 		</track>
 		<track name="my_track">
-			<key row="46" value="0" interpolation="2"/>
-			<key row="127" value="100" interpolation="0"/>
+			<key row="304" value="0" interpolation="1"/>
+			<key row="575" value="100" interpolation="0"/>
+			<key row="576" value="0" interpolation="1"/>
+			<key row="847" value="109" interpolation="0"/>
 		</track>
 	</tracks>
 	<bookmarks/>

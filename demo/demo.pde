@@ -1,44 +1,106 @@
+import moonlander.library.*;
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import ddf.minim.effects.*;
 import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
-import moonlander.library.*;
 
-Moonlander moonlander;
 
 float x,y,z;
+int n = 1000;
+float rad;
 float r;
-float a=0;
 float a2=0;
-float b=0;
+float a = 0;
+float b = 0;
 PShape s;PShape s2; PShape noppa;
 PImage kppg; PImage gppg; PImage sppg;
 
+
+Moonlander moonlander;
+
+int xp[] = new int[n];
+int yp[] = new int[n];
+PVector v[] = new PVector[n];
+PVector l[] = new PVector[n];
+
 void setup() {
-   size(1920, 1080, P3D);//noStroke();
-   smooth();
-   moonlander = Moonlander.initWithSoundtrack(this, "lintu.mp3", 174, 4);
-   moonlander.start();
-   s=createOwnObj("testi2.obj");
-   s2=createOwnObj("pallo2.obj");
-   noppa=createOwnObj("ppg.obj");
+    moonlander = Moonlander.initWithSoundtrack(this, "../data/Himatsu.mp3", 92, 8);
+    size(1920, 1080, P3D);  
+    
+    x = width/2;
+    y = height/2;
+    z = 0;
+    
+    rad = sqrt(pow(width*2,2)+pow(width*2,2));
+    frameRate(60);
+    smooth();
+   
+    s=createOwnObj("testi2.obj",1);
+    s2=createOwnObj("pallo2.obj",2);
+   noppa=createOwnObj("ppg.obj",3);
    kppg = loadImage("k.png");
    gppg = loadImage("g.png");
    sppg = loadImage("s.png");
+    
+    int j = 0;
+    while(j < n){
+      xp[j] = (int)random(-rad, rad);
+      yp[j] = (int)random(-rad, rad);
+      v[j] = new PVector((float)xp[j], (float)yp[j]);
+      if(mag(v[j].x, v[j].y) < rad){
+        l[j] = new PVector((float)xp[j], (float)yp[j]);
+        j++;                 
+      }
+    }
+        moonlander.start();
 }
 
 void draw() {
+  
   moonlander.update();
-  clear();
-  double function_select = moonlander.getValue("function_select");
-  if(function_select<2)
+  //double moon = moonlander.getIntValue("calue");
+  double f_sel = moonlander.getValue("function_select");
+  double value = moonlander.getValue("my_track");
+  
+  int m = millis();
+  //translate(x,y,z);
+  //int col = color(128*(sin((float)moon/8.0)));
+  background(0);
+  //rotate(m);
+ // 
+  
+  if(f_sel >= 1 && f_sel < 1.5){
+    makeWords("GRAFFATHON 2016", 255, 255, 255, 26, 100, 100); 
+  }
+  
+  if(f_sel >= 1.5 && f_sel < 2){
+    makeWords("Power Puff", 255, 255, 255, 26, 100, 100); 
+  }
+  if(f_sel >=1 && f_sel<2)
   {
-    background(0);
-    stroke(255);
-    makeWords();
     flyingHeads();
+  }
+  
+  if(f_sel >= 4 && f_sel < 5){
+    mid_rec(value, 0, 0);
+  }
+  //side_rec(m);
+  //mid_rec(m, -150, -150);
+  //mid_rec(m, -150, 150);
+  //mid_rec(m, 150, -150);
+  //mid_rec(m, 150, 150);
+  //points(v);
+  if(f_sel >= 4.5 && f_sel < 5){
+    lines(l, m);
+  }
+  
+  if(f_sel >= 2 && f_sel < 3)
+  {
+    //background(0);
+    stroke(255);
+
   
     translate(width/2, height/2);
     rotate(-radians(frameCount));
@@ -50,22 +112,68 @@ void draw() {
     drawBox2(-100,-200);
     drawBox2(-278,-59);
   }
-  else if(function_select<3)
+  /*if(f_sel<-1)
   {
-    /*
     double value = moonlander.getValue("my_track");
     float kerroin = 0.9999*log((float)value)/log(100.0);
-    fractal(200, 200, kerroin);
-  }
-  else if((function_select<4))
+    fractal(width, height, kerroin);
+  }*/
+  
+  if(f_sel >= 3 && f_sel < 4)
   {
-    */
-    double value = moonlander.getValue("my_track");
     lighting();
     testiObj((float)value*0.5,(float)value);
-  }
-    
+  } 
   
+  if(f_sel >= 7 && f_sel < 7.3){
+    makeWords("I haven't let the fact that I have no idea what I'm doing slow me down one bit. - Jim Wells", 255, 255, 255, 26, 100, 100);
+  }
+}
+//s(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)
+void mid_rec(double m, int dx, int dy) {
+ pushMatrix(); 
+    translate(x+dx,y+dy,z);
+    noFill();
+    stroke(255);
+    rotate((int)m*30);
+   //scale();
+    rect(-50,-50,100,100);
+  popMatrix();
+}
+
+void side_rec(int m) {
+ pushMatrix();
+    translate(x,y,z);
+    if (frameCount >= 90 && frameCount <= 450){  
+      noFill();
+      stroke(255);
+      rotate(m*100);
+      rect(-200,-200,100,100);
+    }
+  popMatrix(); 
+}
+
+void points(PVector v[]){
+  pushMatrix();
+    translate(x,y,z);
+    stroke(255);
+    for(int p = 0; p < n; p++){
+      v[p].mult(0.992);
+      point(v[p].x, v[p].y);
+    }   
+  popMatrix(); 
+}
+
+void lines(PVector v[], int m){
+  pushMatrix();
+    translate(x,y,z);
+    stroke(255);
+    for(int p = 0; p < n/2; p++) {
+      v[p].setMag(m/70);
+      v[p].div(0.992);
+      line(0, 0, v[p].x*-1, v[p].y*-1);
+    }
+  popMatrix();
 }
 
 void drawBoxes(float aa) {
@@ -94,60 +202,52 @@ void drawBox(float xx, float r, float s) {
   popMatrix();
 }
 
-void makeWords() {
+void makeWords(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)  {
   pushMatrix();
   a = a+2;
-  b = 100+sin(frameCount/10.0)*60;
-  if (a>1400){a=0;}
-  translate(a,b,0);
-  String words = "I haven't let the fact that I have no idea what I'm doing slow me down one bit. - Jim Wells";
-  textSize(26);
-  fill(234,0,0);
-  text(words, 12, 60);
+  b = curve +sin(frameCount/10.0)*60; //pos_y = 100, 
+  if (a > 1400){ a = 0; }
+  translate(a, b, 0);
+  textSize(text_size); // 26
+  fill(col_r, col_g, col_b);  
+  text(words, 12, pos_y); // 60
   popMatrix();
 }
 
 void testiObj(float xin,double y)
 {
-  float xj;
-  float xi;
+  float y2;
   float x;
-  float temp=40;
-   if(y<40)
+  float temp=50;
+   if(y<50)
   {
-    xj=3.8*xin;
-    xi=pow(1.01,xin);
-    x=xj*xi;
+    x=exp(xin/5.0);
   }
     else
    {
-     xj=20.0-xin*4.0;
-     xi=pow(1.01,temp);
-     x=xj*xi;
+     x=exp(temp/5.0-xin/5.0);
      
    }
   
-  //testiBox(x*y);
-  
-  if(y<40)
+  if(y<50)
   {
     s2.setVisible(false);
     s.setVisible(true);
     pushMatrix();
     //translate(200.0+(i*x*20.0,200.0+j*x*20.0,0);
-    translate(400.0+2.6*x,400.0,0);
-    scale(min(1.0,2.0/x));
+    translate(560.0+2.5*x,400.0,0);
+    scale(min(1.0,(2.0/x+0.03)));
     rotateX(x);
-    if(y>20)
+    if(y>40)
       rotateY(x);
     shape(s,0,0);
     popMatrix();
     
-     pushMatrix();
-    translate(900.0-2.6*x,400.0,0);
-    scale(min(1.0,2.0/x));
+    pushMatrix();
+    translate(1360.0-2.5*x,400.0,0);
+    scale(min(1.0,(2.0/x+0.03)));
     rotateX(x);
-    if(y>20)
+    if(y>40)
       rotateY(x);
     shape(s,0,0);
     popMatrix();
@@ -158,9 +258,9 @@ void testiObj(float xin,double y)
   s.setVisible(false);
   s2.setVisible(true);
   pushMatrix();
-  translate(650.0,400.0,0);
+  translate(950.0,400.0,0);
   scale(5.0);
-  scale(min(1.0,2.0/x));
+  scale(min(1.0,(2.0/x+0.03)));
   rotateX(x);
   
   shape(s2,0,0);
@@ -180,11 +280,18 @@ void lighting()
   directionalLight(255, 255, 100, 0, -1, 0);
 }
 
-PShape createOwnObj(String filename)
+PShape createOwnObj(String filename,int index)
 {
   PShape s = loadShape(filename);
   s.scale(80.0);
-  s.rotateX(45);
+  if(index==1)
+    s.rotateX(145);
+    else
+    {
+      s.rotateY(45);
+    }
+    
+    
   return s;
   
 }
@@ -225,9 +332,18 @@ void fractal(int xsize, int ysize,float kerroin)
   }
   temp.updatePixels();
   background(temp);
-  
 }
 
+void a(String s){  
+  char c_array[] = new char[s.length()];
+ 
+
+
+  for(int i = 0; i < s.length(); i++){
+   c_array[i] = s.charAt(i); 
+  }
+}
+  
 void flyingHeads()
 {
   float b1=5000+sin(frameCount/10.0)*300;
