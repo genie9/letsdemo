@@ -11,10 +11,12 @@ float x,y,z;
 int n = 1500;
 float rad;
 float r;
+float a2=0;
 float a = 0;
 float b = 0;
-PShape s;
-PShape s2;
+PShape s;PShape s2; PShape noppa;
+PImage kppg; PImage gppg; PImage sppg;
+
 
 Moonlander moonlander;
 
@@ -35,8 +37,12 @@ void setup() {
     frameRate(60);
     smooth();
    
-    s=createOwnObj("testi2.obj");
-    s2=createOwnObj("pallo2.obj");
+    s=createOwnObj("testi2.obj",1);
+    s2=createOwnObj("pallo2.obj",2);
+   noppa=createOwnObj("ppg.obj",3);
+   kppg = loadImage("k.png");
+   gppg = loadImage("g.png");
+   sppg = loadImage("s.png");
     
     int j = 0;
     while(j < n){
@@ -72,6 +78,10 @@ void draw() {
   if(f_sel >= 1.5 && f_sel < 2){
     makeWords("Power Puff", 255, 255, 255, 26, 100, 100); 
   }
+  if(f_sel >=1 && f_sel<2)
+  {
+    flyingHeads();
+  }
   
   if(f_sel >= 4 && f_sel < 5){
     mid_rec(m, 0, 0, 1, 255);
@@ -94,7 +104,7 @@ void draw() {
   {
     //background(0);
     stroke(255);
-    
+
   
     translate(width/2, height/2);
     rotate(-radians(frameCount));
@@ -208,25 +218,18 @@ void makeWords(String words, int col_r, int col_g, int col_b, float text_size, f
 
 void testiObj(float xin,double y)
 {
-  float xj;
-  float xi;
+  float y2;
   float x;
-  float temp=100.0*0.5;
+  float temp=50;
    if(y<50)
   {
-    xj=4.0*xin;
-    xi=pow(1.02,xin);
-    x=xj*xi;
+    x=exp(xin/5.0);
   }
     else
    {
-     xj=(temp-xin)*4.0;
-     xi=pow(1.02,temp-xin);
-     x=xj*xi;
+     x=exp(temp/5.0-xin/5.0);
      
    }
-  
-  //testiBox(x*y);
   
   if(y<50)
   {
@@ -234,10 +237,19 @@ void testiObj(float xin,double y)
     s.setVisible(true);
     pushMatrix();
     //translate(200.0+(i*x*20.0,200.0+j*x*20.0,0);
-    translate(200.0,200.0,0);
-    scale(min(1.0,2.0/x));
+    translate(560.0+2.5*x,400.0,0);
+    scale(min(1.0,(2.0/x+0.03)));
     rotateX(x);
-    if(y>20)
+    if(y>40)
+      rotateY(x);
+    shape(s,0,0);
+    popMatrix();
+    
+    pushMatrix();
+    translate(1360.0-2.5*x,400.0,0);
+    scale(min(1.0,(2.0/x+0.03)));
+    rotateX(x);
+    if(y>40)
       rotateY(x);
     shape(s,0,0);
     popMatrix();
@@ -248,9 +260,9 @@ void testiObj(float xin,double y)
   s.setVisible(false);
   s2.setVisible(true);
   pushMatrix();
-  translate(200.0,200.0,0);
+  translate(950.0,400.0,0);
   scale(5.0);
-  scale(min(1.0,2.0/x));
+  scale(min(1.0,(2.0/x+0.03)));
   rotateX(x);
   
   shape(s2,0,0);
@@ -270,11 +282,18 @@ void lighting()
   directionalLight(255, 255, 100, 0, -1, 0);
 }
 
-PShape createOwnObj(String filename)
+PShape createOwnObj(String filename,int index)
 {
   PShape s = loadShape(filename);
-  s.scale(30.0);
-  s.rotateX(45);
+  s.scale(80.0);
+  if(index==1)
+    s.rotateX(145);
+    else
+    {
+      s.rotateY(45);
+    }
+    
+    
   return s;
   
 }
@@ -317,9 +336,44 @@ void fractal(int xsize, int ysize,float kerroin)
   background(temp);
 }
 
-void a(String s){  char c_array[] = new char[s.length()];
-  
+void a(String s){  
+  char c_array[] = new char[s.length()];
+ 
+
+
   for(int i = 0; i < s.length(); i++){
    c_array[i] = s.charAt(i); 
-  }}
+  }
+}
   
+void flyingHeads()
+{
+  float b1=5000+sin(frameCount/10.0)*300;
+  float b2=5000+sin(frameCount/10.0+30)*300;
+  float b3=5000+sin(frameCount/10.0+60)*300;
+  a2+=5;
+  if (a>1400){a=0;}
+  pushMatrix();
+    scale(0.1);
+  translate(a2,b1,0);
+   if(12.56<a*0.0135 && a*0.0135<18.8)
+    rotateZ(a*0.0135);
+  image(kppg,0,0);
+  popMatrix();
+  
+  pushMatrix();
+  scale(0.1);
+  translate(a2+1000,b2,0);
+    if(6.28<a*0.0135 && a*0.0135<12.56)
+    rotateZ(a*0.0135);
+  image(sppg,0,0);
+  popMatrix();
+  
+  pushMatrix();
+  scale(0.1);
+  translate(a2+2000,b3,0);
+  if(0<a*0.0135 && a*0.0135<6.28)
+    rotateZ(a*0.0135);
+  image(gppg,0,0);
+  popMatrix();
+}
