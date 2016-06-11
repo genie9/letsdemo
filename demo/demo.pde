@@ -14,7 +14,7 @@ PVector l[] = new PVector[n];
 
 void setup() {
     moonlander = Moonlander.initWithSoundtrack(this, "../data/Daft.mp3", 120 , 8);
-    size(600, 600, P3D);  
+    size(1920, 1080, P3D);  
     x = width/2;
     y = height/2;
     z = 0;
@@ -39,33 +39,35 @@ void draw() {
   moonlander.update();
   double moon = moonlander.getIntValue("calue");
   int m = millis();
-  
+  //translate(x,y,z);
   //int col = color(128*(sin((float)moon/8.0)));
   background(0);
-  
-  mid_rec(m);
+  //rotate(m);
+  mid_rec(m, 0, 0);
   side_rec(m);
+  mid_rec(m, -150, -150);
+  mid_rec(m, -150, 150);
+  mid_rec(m, 150, -150);
+  mid_rec(m, 150, 150);
   points(v);
   lines(l, m);
 }
 
-void mid_rec(int m) {
+void mid_rec(int m, int dx, int dy) {
  pushMatrix(); 
-    translate(x,y,z);
-    //float i = 0.3;
+    translate(x+dx,y+dy,z);
     noFill();
     stroke(255);
-  //rectMode(CENTER);
     rotate(m*30);
    //scale();
     rect(-50,-50,100,100);
-  popMatrix(); 
+  popMatrix();
 }
 
 void side_rec(int m) {
  pushMatrix();
     translate(x,y,z);
-    if (frameCount >= 90 && frameCount <= 250){  
+    if (frameCount >= 90 && frameCount <= 450){  
       noFill();
       stroke(255);
       rotate(m*100);
@@ -87,12 +89,12 @@ void points(PVector v[]){
 
 void lines(PVector v[], int m){
   pushMatrix();
-    //translate(x,y,z);
+    translate(x,y,z);
     stroke(255);
     for(int p = 0; p < n/2; p++) {
-      //v[p].setMag(m/70);
-      //v[p].div(0.992);
-      line(0,0, v[p].x*-1, v[p].y*-1);
+      v[p].setMag(m/70);
+      v[p].div(0.992);
+      line(0, 0, v[p].x*-1, v[p].y*-1);
     }
   popMatrix();
 }
