@@ -56,6 +56,7 @@ void draw() {
   moonlander.update();
   //double moon = moonlander.getIntValue("calue");
   double f_sel = moonlander.getValue("function_select");
+  double value = moonlander.getValue("my_track");
   
   int m = millis();
   //translate(x,y,z);
@@ -72,8 +73,8 @@ void draw() {
     makeWords("Power Puff", 255, 255, 255, 26, 100, 100); 
   }
   
-  if(f_sel >= 2 && f_sel < 3){
-    mid_rec(m, 0, 0);
+  if(f_sel >= 4 && f_sel < 5){
+    mid_rec(value, 0, 0);
   }
   //side_rec(m);
   //mid_rec(m, -150, -150);
@@ -81,13 +82,13 @@ void draw() {
   //mid_rec(m, 150, -150);
   //mid_rec(m, 150, 150);
   //points(v);
-  if(f_sel >= 2.5 && f_sel < 3){
+  if(f_sel >= 4.5 && f_sel < 5){
     lines(l, m);
   }
   
-  if(f_sel >= 4 && f_sel < 5)
+  if(f_sel >= 2 && f_sel < 3)
   {
-    background(0);
+    //background(0);
     stroke(255);
     
   
@@ -110,7 +111,6 @@ void draw() {
   
   if(f_sel >= 3 && f_sel < 4)
   {
-    double value = moonlander.getValue("my_track");
     lighting();
     testiObj((float)value*0.5,(float)value);
   } 
@@ -120,12 +120,12 @@ void draw() {
   }
 }
 //s(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)
-void mid_rec(int m, int dx, int dy) {
+void mid_rec(double m, int dx, int dy) {
  pushMatrix(); 
     translate(x+dx,y+dy,z);
     noFill();
     stroke(255);
-    rotate(m*30);
+    rotate((int)m*30);
    //scale();
     rect(-50,-50,100,100);
   popMatrix();
