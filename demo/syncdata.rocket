@@ -27,6 +27,8 @@
 			<key row="1390" value="8" interpolation="0"/>
 		</track>
 		<track name="genie">
+			<key row="16" value="0" interpolation="1"/>
+			<key row="155" value="-150" interpolation="0"/>
 			<key row="712" value="0" interpolation="1"/>
 			<key row="847" value="136" interpolation="0"/>
 			<key row="1052" value="0" interpolation="1"/>

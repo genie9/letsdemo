@@ -17,6 +17,7 @@ float b = 0;
 int pic=0;
 PShape s;PShape s2; PShape noppa;
 PImage kppg; PImage gppg; PImage sppg;
+PImage bg;
 
 
 Moonlander moonlander;
@@ -25,6 +26,7 @@ int xp[] = new int[n];
 int yp[] = new int[n];
 PVector v[] = new PVector[n];
 PVector l[] = new PVector[n];
+PVector k[] = new PVector[n];
 PVector d[] = new PVector[n];
 
 void setup() {
@@ -41,16 +43,19 @@ void setup() {
    
     s=createOwnObj("testi2.obj",1);
     s2=createOwnObj("pallo2.obj",2);
-    noppa=createOwnObj("ppg.obj",3);
-    kppg = loadImage("k.png");
-    gppg = loadImage("g.png");
-    sppg = loadImage("s.png");
+   noppa=createOwnObj("ppg.obj",3);
+   kppg = loadImage("k.png");
+   gppg = loadImage("g.png");
+   sppg = loadImage("s.png");
+   bg = loadImage("testibg.png");
+
     
     int j = 0;
     while(j < n){
       xp[j] = (int)random(-rad, rad);
       yp[j] = (int)random(-rad, rad);
       v[j] = new PVector((float)xp[j], (float)yp[j]);
+      //k[j] =new PVector (random(0,width), random(0,height));
       if(mag(v[j].x, v[j].y) < rad){
         l[j] = new PVector((float)xp[j], (float)yp[j]);
         d[j] = new PVector((float)xp[j], (float)yp[j]);
@@ -70,6 +75,7 @@ void draw() {
   int m = millis();
   background(0);
   
+
 if(f_sel >= 1 && f_sel < 1.5){ 
     slideWords("GRAFFATHON 2016", 255, 255, 255, 64, -135, 450);
   }
@@ -107,6 +113,7 @@ if(f_sel >= 1 && f_sel < 1.5){
   if(f_sel >= 3 && f_sel < 4)
   {
     lighting();
+    points2();
     testiObj((float)value*0.5,(float)value);
   } 
   
@@ -152,6 +159,7 @@ if(f_sel >= 1 && f_sel < 1.5){
   }
   
   if(f_sel >= 6 && f_sel < 6.5) {
+    background(bg);
     testiObj((float)value*0.5,(float)value);
   }
   
@@ -235,6 +243,17 @@ void points(PVector v[], float vel){
     }   
   popMatrix(); 
 }
+
+void points2(){
+  pushMatrix();
+  translate(x,y,z);
+    for(int p = 0; p < n; p++){
+       stroke(255);
+       point(v[p].x*0.992, v[p].y*0.992);
+    }   
+    popMatrix();
+}
+
 
 void lines(PVector v[], double m, int col_r, int col_g, int col_b, float vel){
   pushMatrix();
@@ -447,7 +466,7 @@ void flyingHeads()
   float b1=5000+sin(frameCount/10.0)*300;
   float b2=5000+sin(frameCount/10.0+30)*300;
   float b3=5000+sin(frameCount/10.0+60)*300;
-  a2+=5;
+  a2+=10;
   if (a>1400){a=0;}
   pushMatrix();
     scale(0.1);
@@ -473,3 +492,44 @@ void flyingHeads()
   image(gppg,0,0);
   popMatrix();
 }
+
+void setBg(double x)
+{
+
+  for (int j = 0; j< n; j++)
+  {
+      pushMatrix();
+      fill(150*(0.5+random(0.0,0.5))-(float)x,150*(0.5+0.5)-(float)x,0);
+      ellipse(k[j].x+random(-1.0,1.0), k[j].y+random(-1.0,1.0), 5, 5);
+      //scale(0.01);
+      //image(star,0,0);
+      popMatrix();
+  }
+}
+
+void moveStars(float xin, float yin)
+{
+    for (int j = 0; j< n; j++)
+  {
+      float r2 = pow((k[j].x-xin),2.0)+pow((k[j].y-yin),2.0);
+      float r = sqrt(r2);
+      float move = (30/r2*0.5*pow(0.1,2.0)+0.1)/r;
+      if(move>1)
+      {
+        k[j].x=xin;
+        k[j].y=yin;
+      }
+      else
+      {
+      k[j].x=k[j].x+(k[j].x-xin)*move;
+      k[j].y=k[j].y+(k[j].y-yin)*move;
+      }
+      
+      pushMatrix();
+      fill(150*(0.5+random(0.0,0.5))-(float)x,150*(0.5+0.5)-(float)x,0);
+      ellipse(k[j].x+random(-1.0,1.0), k[j].y+random(-1.0,1.0), 5, 5);
+      //scale(0.01);
+      //image(star,0,0);
+      popMatrix();
+  }
+} 
