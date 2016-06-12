@@ -71,7 +71,7 @@ void draw() {
   background(0);
   
 if(f_sel >= 1 && f_sel < 1.5){ 
-    slideWords("GRAFFATHON 2016", 255, 255, 255, 64, -135);
+    slideWords("GRAFFATHON 2016", 255, 255, 255, 64, -135, 450);
   }
  
  //s(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)
@@ -168,36 +168,39 @@ if(f_sel >= 1 && f_sel < 1.5){
     }
   }
   
-  
-  /*if(f_sel<-1)
-  {
-    double value = moonlander.getValue("my_track");
-    float kerroin = 0.9999*log((float)value)/log(100.0);
-    fractal(width, height, kerroin);
-  }*/
-  
-  
-  
   if(f_sel >= 7 && f_sel < 8){
+
     if(value >=  1 && value < 2){
-      makeWords("I haven't let the fact that I have no idea what I'm doing slow me down one bit. - Jim Wells", 255, 255, 255, 26, 100, 100, 0);
+      if(abs((float)value - 1.0) < 0.01) {a =0;}
+      slideWords("I haven't let the fact that I have no idea what I'm doing slow me down one bit. - Jim Wells", 255, 255, 255, 26, 100, 850);
     }
+    
     if(value >= 2 && value < 4){
-      makeWords("coDe && grAphIcs", 255, 255, 255, 26, 100, 100, 0);
+      if(abs((float)value - 2.0) < 0.01) {a = 0;}
+      slideWords("coDe && grAphiCs:", 255, 255, 255, 50, -400, 750);
+      slideWords("kielo || Silphid || geniE ", 255, 255, 255, 55, 0, 850);
+      //slideWords("Silphid", 255, 255, 255, 26, -200, 650);
+      //slideWords("geniE", 255, 255, 255, 26, -100, 650);
     }
+
     if(value >= 4 && value < 5){
-      slideWords("MuSiC:", 255, 255, 255, 26, 100);
-      slideWords("A Himitsu", 255, 255, 255, 26, 500);
+      if(abs((float)value - 4.0) < 0.01) {a =0;}
+      slideWords("MuSiC:", 255, 255, 255, 26, -200, 750);
+      slideWords("A Himitsu", 255, 255, 255, 26, 0, 750);
     }
     if(value >= 5 && value < 6){
-      slideWords("THANKS TO:", 255, 255, 255, 26, 100);
-      slideWords("DOT", 255, 255, 255, 26, 100);
+      if(abs((float)value - 5.0) < 0.01) {a =0;}
+      slideWords("THANKS TO:", 255, 255, 255, 56, -300, 700);
+      slideWords("DOT", 255, 255, 255, 80, 400, 750);
     }
     if(value >= 6 && value < 7){
-      slideWords("DEMOSCENE", 255, 255, 255, 26, 100);
-      slideWords("WORLD WIDE!!!", 255, 255, 255, 26, 500);
+      if(abs((float)value - 6.0) < 0.01) {a =0;}
+      slideWords("DEMOSCENE WORLD WIDE!!!", 255, 255, 255, 40, 100, 700);
     }
-    //slideWords(String words, int col_r, int col_g, int col_b, float text_size, float pos_y)
+    if(value >= 7 && value < 8){
+      if(abs((float)value - 7.0) < 0.01) {a = 0;}
+        flyingHeads();
+    }
   }
 }
 //s(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)
@@ -298,18 +301,17 @@ void makeWords(String words, int col_r, int col_g, int col_b, float text_size, f
 
 float pos_x = 0;
 
-void slideWords(String words, int col_r, int col_g, int col_b, float text_size, float pos_y)  {
-  //while(a < 1400){
+void slideWords(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, float start)  {
   pushMatrix();
     translate(x, y, z);
-    if (a > 1000){ a = 0; }
+    //if (a > 1200){ a = 0; }
     textSize(text_size);
     fill(col_r, col_g, col_b); 
     a += 2; 
-    text(words, a - 450, pos_y);
+    text(words, a - start, pos_y);
   popMatrix();
-  //}
 }
+
 void testiObj(float xin,double y)
 {
   float y2;
