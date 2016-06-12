@@ -16,6 +16,7 @@ float a = 0;
 float b = 0;
 PShape s;PShape s2; PShape noppa;
 PImage kppg; PImage gppg; PImage sppg;
+PImage bg;
 
 
 Moonlander moonlander;
@@ -24,6 +25,7 @@ int xp[] = new int[n];
 int yp[] = new int[n];
 PVector v[] = new PVector[n];
 PVector l[] = new PVector[n];
+PVector k[] = new PVector[n];
 
 void setup() {
     moonlander = Moonlander.initWithSoundtrack(this, "../data/Himatsu.mp3", 92, 8);
@@ -43,15 +45,17 @@ void setup() {
    kppg = loadImage("k.png");
    gppg = loadImage("g.png");
    sppg = loadImage("s.png");
+   bg = loadImage("testbg.png");
     
     int j = 0;
     while(j < n){
       xp[j] = (int)random(-rad, rad);
       yp[j] = (int)random(-rad, rad);
       v[j] = new PVector((float)xp[j], (float)yp[j]);
+      k[j] =new PVector (random(0,width), random(0,height));
       if(mag(v[j].x, v[j].y) < rad){
         l[j] = new PVector((float)xp[j], (float)yp[j]);
-        j++;                 
+        j++; 
       }
     }
         moonlander.start();
@@ -72,7 +76,7 @@ void draw() {
  // 
   
   if(f_sel >= 1 && f_sel < 1.5){
-    makeWords("GRAFFATHON 2016", 255, 255, 255, 26, 100, 100); 
+    makeWords("GRAFFATHON 2016", 255, 255, 255, 26, 100, 100);
   }
   
   if(f_sel >= 1.5 && f_sel < 2){
@@ -126,6 +130,7 @@ void draw() {
   if(f_sel >= 3 && f_sel < 4)
   {
     lighting();
+    points2();
     testiObj((float)value*0.5,(float)value);
   } 
   
@@ -164,6 +169,16 @@ void points(PVector v[]){
       point(v[p].x, v[p].y);
     }   
   popMatrix(); 
+}
+
+void points2(){
+  pushMatrix();
+  translate(x,y,z);
+    for(int p = 0; p < n; p++){
+       stroke(255);
+       point(v[p].x*0.992, v[p].y*0.992);
+    }   
+    popMatrix();
 }
 
 void lines(PVector v[], double m){
@@ -277,9 +292,10 @@ void lighting()
   float cameraZ = (height/2.0) / tan(fov/2.0);
   perspective(fov, float(width)/float(height), 
             cameraZ/10.0, cameraZ*10.0);
-  ambientLight(50,50,100);
+  //ambientLight(50,50,100);
+  ambientLight(250,250,250);
   //spotLight(0, 255, 0, width/2, height/2, 400, 0, 0, -1, PI/4, 2);
-  directionalLight(255, 255, 100, 0, -1, 0);
+  //directionalLight(255, 255, 100, 0, -1, 0);
 }
 
 PShape createOwnObj(String filename,int index)
@@ -351,7 +367,7 @@ void flyingHeads()
   float b1=5000+sin(frameCount/10.0)*300;
   float b2=5000+sin(frameCount/10.0+30)*300;
   float b3=5000+sin(frameCount/10.0+60)*300;
-  a2+=5;
+  a2+=10;
   if (a>1400){a=0;}
   pushMatrix();
     scale(0.1);
@@ -376,4 +392,46 @@ void flyingHeads()
     rotateZ(a*0.0135);
   image(gppg,0,0);
   popMatrix();
+}
+
+void setBg(double x)
+{
+
+  for (int j = 0; j< n; j++)
+  {
+      pushMatrix();
+      fill(150*(0.5+random(0.0,0.5))-(float)x,150*(0.5+0.5)-(float)x,0);
+      ellipse(k[j].x+random(-1.0,1.0), k[j].y+random(-1.0,1.0), 5, 5);
+      //scale(0.01);
+      //image(star,0,0);
+      popMatrix();
+  }
+}
+
+void moveStars(float xin, float yin)
+{
+    for (int j = 0; j< n; j++)
+  {
+      float r2 = pow((k[j].x-xin),2.0)+pow((k[j].y-yin),2.0);
+      float r = sqrt(r2);
+      float move = (30/r2*0.5*pow(0.1,2.0)+0.1)/r;
+      if(move>1)
+      {
+        k[j].x=xin;
+        k[j].y=yin;
+      }
+      else
+      {
+      k[j].x=k[j].x+(k[j].x-xin)*move;
+      k[j].y=k[j].y+(k[j].y-yin)*move;
+      }
+      
+      pushMatrix();
+      fill(150*(0.5+random(0.0,0.5))-(float)x,150*(0.5+0.5)-(float)x,0);
+      ellipse(k[j].x+random(-1.0,1.0), k[j].y+random(-1.0,1.0), 5, 5);
+      //scale(0.01);
+      //image(star,0,0);
+      popMatrix();
+  }
+  
 }
