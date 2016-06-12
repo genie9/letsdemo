@@ -8,8 +8,9 @@
 			<key row="576" value="4" interpolation="1"/>
 			<key row="848" value="5" interpolation="1"/>
 			<key row="984" value="6" interpolation="1"/>
-			<key row="1120" value="7" interpolation="1"/>
-			<key row="1390" value="8" interpolation="0"/>
+			<key row="1120" value="7" interpolation="3"/>
+			<key row="1399" value="8" interpolation="1"/>
+			<key row="1401" value="9" interpolation="0"/>
 		</track>
 		<track name="my_track">
 			<key row="88" value="1" interpolation="0"/>
@@ -27,8 +28,6 @@
 			<key row="1390" value="8" interpolation="0"/>
 		</track>
 		<track name="genie">
-			<key row="16" value="0" interpolation="1"/>
-			<key row="155" value="-150" interpolation="0"/>
 			<key row="712" value="0" interpolation="1"/>
 			<key row="847" value="136" interpolation="0"/>
 			<key row="1052" value="0" interpolation="1"/>

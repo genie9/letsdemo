@@ -55,7 +55,7 @@ void setup() {
       xp[j] = (int)random(-rad, rad);
       yp[j] = (int)random(-rad, rad);
       v[j] = new PVector((float)xp[j], (float)yp[j]);
-      //k[j] =new PVector (random(0,width), random(0,height));
+      k[j] =new PVector (random(0,width), random(0,height));
       if(mag(v[j].x, v[j].y) < rad){
         l[j] = new PVector((float)xp[j], (float)yp[j]);
         d[j] = new PVector((float)xp[j], (float)yp[j]);
@@ -159,7 +159,7 @@ if(f_sel >= 1 && f_sel < 1.5){
   }
   
   if(f_sel >= 6 && f_sel < 6.5) {
-    background(bg);
+    setBg(250);
     testiObj((float)value*0.5,(float)value);
   }
   
@@ -172,6 +172,7 @@ if(f_sel >= 1 && f_sel < 1.5){
      mid_rec(m, 500, 350, 1, 255);
 
     if(moon >= 1) {
+      setBg(250);
       lines(d, moon, 252, 222, 98, 0.5);  
     }
   }
@@ -193,13 +194,13 @@ if(f_sel >= 1 && f_sel < 1.5){
 
     if(value >= 4 && value < 5){
       if(abs((float)value - 4.0) < 0.01) {a =0;}
-      slideWords("MuSiC:", 255, 255, 255, 26, -200, 750);
-      slideWords("A Himitsu", 255, 255, 255, 26, 0, 750);
+      slideWords("MuSiC:", 255, 255, 255, 50, -200, 750);
+      slideWords("A Himitsu", 255, 255, 255, 55, 0, 750);
     }
     if(value >= 5 && value < 6){
       if(abs((float)value - 5.0) < 0.01) {a =0;}
-      slideWords("THANKS TO:", 255, 255, 255, 56, -300, 700);
-      slideWords("DOT", 255, 255, 255, 80, 400, 750);
+      slideWords("THANKS TO:", 255, 255, 255, 56, -200, 700);
+      slideWords("DOT", 255, 255, 255, 80, 200, 750);
     }
     if(value >= 6 && value < 7){
       if(abs((float)value - 6.0) < 0.01) {a =0;}
@@ -210,8 +211,12 @@ if(f_sel >= 1 && f_sel < 1.5){
         flyingHeads();
     }
   }
+  if(f_sel > 8.0){
+    exit();
+  }
 }
-//s(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)
+
+
 void mid_rec(int m, int dx, int dy, int sw, int col) {
  pushMatrix(); 
     translate(x+dx,y+dy,z);
@@ -499,8 +504,8 @@ void setBg(double x)
   for (int j = 0; j< n; j++)
   {
       pushMatrix();
-      fill(150*(0.5+random(0.0,0.5))-(float)x,150*(0.5+0.5)-(float)x,0);
-      ellipse(k[j].x+random(-1.0,1.0), k[j].y+random(-1.0,1.0), 5, 5);
+      strokeWeight(1);
+      point(k[j].x+random(-1.0,1.0), k[j].y+random(-1.0,1.0));
       //scale(0.01);
       //image(star,0,0);
       popMatrix();
