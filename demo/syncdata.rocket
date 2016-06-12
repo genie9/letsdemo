@@ -12,14 +12,27 @@
 			<key row="1390" value="8" interpolation="0"/>
 		</track>
 		<track name="my_track">
+			<key row="88" value="1" interpolation="0"/>
+			<key row="120" value="2" interpolation="0"/>
 			<key row="304" value="0" interpolation="1"/>
 			<key row="575" value="100" interpolation="0"/>
+			<key row="984" value="0" interpolation="1"/>
+			<key row="1051" value="50" interpolation="0"/>
+			<key row="1120" value="1" interpolation="0"/>
+			<key row="1187" value="2" interpolation="0"/>
+			<key row="1220" value="3" interpolation="0"/>
+			<key row="1256" value="4" interpolation="0"/>
+			<key row="1290" value="5" interpolation="0"/>
+			<key row="1323" value="6" interpolation="0"/>
+			<key row="1357" value="7" interpolation="0"/>
 		</track>
 		<track name="genie">
 			<key row="16" value="0" interpolation="1"/>
 			<key row="155" value="-150" interpolation="0"/>
 			<key row="712" value="0" interpolation="1"/>
 			<key row="847" value="136" interpolation="0"/>
+			<key row="1052" value="0" interpolation="1"/>
+			<key row="1119" value="68" interpolation="0"/>
 		</track>
 	</tracks>
 	<bookmarks/>
