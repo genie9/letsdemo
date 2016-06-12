@@ -137,7 +137,7 @@ if(f_sel >= 1 && f_sel < 1.5){
       popMatrix();
     }
   
-    if(f_sel >= 5.6 && f_sel < 6) {
+    if(f_sel >= 5.5 && f_sel < 6) {
       stroke(255);
       translate(width/2, height/2);
       rotate(-radians(frameCount));
@@ -178,8 +178,26 @@ if(f_sel >= 1 && f_sel < 1.5){
   
   
   
-  if(f_sel >= 7 && f_sel < 7.3){
-    makeWords("I haven't let the fact that I have no idea what I'm doing slow me down one bit. - Jim Wells", 255, 255, 255, 26, 100, 100, 0);
+  if(f_sel >= 7 && f_sel < 8){
+    if(value >=  1 && value < 2){
+      makeWords("I haven't let the fact that I have no idea what I'm doing slow me down one bit. - Jim Wells", 255, 255, 255, 26, 100, 100, 0);
+    }
+    if(value >= 2 && value < 4){
+      makeWords("coDe && grAphIcs", 255, 255, 255, 26, 100, 100, 0);
+    }
+    if(value >= 4 && value < 5){
+      slideWords("MuSiC:", 255, 255, 255, 26, 100);
+      slideWords("A Himitsu", 255, 255, 255, 26, 500);
+    }
+    if(value >= 5 && value < 6){
+      slideWords("THANKS TO:", 255, 255, 255, 26, 100);
+      slideWords("DOT", 255, 255, 255, 26, 100);
+    }
+    if(value >= 6 && value < 7){
+      slideWords("DEMOSCENE", 255, 255, 255, 26, 100);
+      slideWords("WORLD WIDE!!!", 255, 255, 255, 26, 500);
+    }
+    //slideWords(String words, int col_r, int col_g, int col_b, float text_size, float pos_y)
   }
 }
 //s(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)
