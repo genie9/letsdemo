@@ -70,16 +70,24 @@ void draw() {
   int m = millis();
   background(0);
   
-  if(f_sel >= 1 && f_sel < 1.5){
-    makeWords("GRAFFATHON 2016", 255, 255, 255, 26, 100, 100); 
+if(f_sel >= 1 && f_sel < 1.5){ 
+    slideWords("GRAFFATHON 2016", 255, 255, 255, 64, -135);
   }
-  
-  if(f_sel >= 1.5 && f_sel < 2){
-    makeWords("Power Puff", 255, 255, 255, 26, 100, 100); 
-  }
+ 
+ //s(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)
+ //slideWords(String words, int col_r, int col_g, int col_b, float text_size, float pos_y) 
+ 
+  //if(f_sel >= 1.5  && f_sel < 2){
+      
   if(f_sel >=1 && f_sel<2)
   {
     flyingHeads();
+    if(value >= 1){
+        makeWords("Power Puff", 255, 255, 255, 87, 100, 100, 0); 
+      }
+    if(value >= 2){
+      makeWords("Let's demo!", 255, 255, 255, 100, 700, 50, 1);
+    }
   }
   
   if(f_sel >= 2 && f_sel < 3)
@@ -171,7 +179,7 @@ void draw() {
   
   
   if(f_sel >= 7 && f_sel < 7.3){
-    makeWords("I haven't let the fact that I have no idea what I'm doing slow me down one bit. - Jim Wells", 255, 255, 255, 26, 100, 100);
+    makeWords("I haven't let the fact that I have no idea what I'm doing slow me down one bit. - Jim Wells", 255, 255, 255, 26, 100, 100, 0);
   }
 }
 //s(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)
@@ -250,18 +258,40 @@ void drawBox(float xx, float r, float s) {
   popMatrix();
 }
 
-void makeWords(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve)  {
+void makeWords(String words, int col_r, int col_g, int col_b, float text_size, float pos_y, int curve, int math)  {
   pushMatrix();
-  a = a+2;
-  b = curve +sin(frameCount/10.0)*60; //pos_y = 100, 
-  if (a > 1400){ a = 0; }
-  translate(a, b, 0);
+  a += 2;
+  if(math == 0){
+    pos_x = pos_x + 1.5;
+    b = curve +sin(frameCount/10.0)*60; //pos_y = 100,
+  }
+  if(math == 1){
+    pos_x = pos_x + 2;
+    b = curve + cos(frameCount/10.0)*60; //pos_y = 100,
+  }
+  
+  if (pos_x > 1400){ pos_x = 0; }
+  translate(pos_x, b, 0);
   textSize(text_size); // 26
   fill(col_r, col_g, col_b);  
   text(words, 12, pos_y); // 60
   popMatrix();
 }
 
+float pos_x = 0;
+
+void slideWords(String words, int col_r, int col_g, int col_b, float text_size, float pos_y)  {
+  //while(a < 1400){
+  pushMatrix();
+    translate(x, y, z);
+    if (a > 1000){ a = 0; }
+    textSize(text_size);
+    fill(col_r, col_g, col_b); 
+    a += 2; 
+    text(words, a - 450, pos_y);
+  popMatrix();
+  //}
+}
 void testiObj(float xin,double y)
 {
   float y2;
