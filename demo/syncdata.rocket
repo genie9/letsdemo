@@ -14,10 +14,14 @@
 		<track name="my_track">
 			<key row="304" value="0" interpolation="1"/>
 			<key row="575" value="100" interpolation="0"/>
+			<key row="984" value="0" interpolation="1"/>
+			<key row="1051" value="50" interpolation="0"/>
 		</track>
 		<track name="genie">
 			<key row="712" value="0" interpolation="1"/>
 			<key row="847" value="136" interpolation="0"/>
+			<key row="1052" value="0" interpolation="1"/>
+			<key row="1119" value="68" interpolation="0"/>
 		</track>
 	</tracks>
 	<bookmarks/>

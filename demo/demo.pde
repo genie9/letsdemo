@@ -14,6 +14,7 @@ float r;
 float a2=0;
 float a = 0;
 float b = 0;
+int pic=0;
 PShape s;PShape s2; PShape noppa;
 PImage kppg; PImage gppg; PImage sppg;
 
@@ -24,6 +25,7 @@ int xp[] = new int[n];
 int yp[] = new int[n];
 PVector v[] = new PVector[n];
 PVector l[] = new PVector[n];
+PVector d[] = new PVector[n];
 
 void setup() {
     moonlander = Moonlander.initWithSoundtrack(this, "../data/Himatsu.mp3", 92, 8);
@@ -39,10 +41,10 @@ void setup() {
    
     s=createOwnObj("testi2.obj",1);
     s2=createOwnObj("pallo2.obj",2);
-   noppa=createOwnObj("ppg.obj",3);
-   kppg = loadImage("k.png");
-   gppg = loadImage("g.png");
-   sppg = loadImage("s.png");
+    noppa=createOwnObj("ppg.obj",3);
+    kppg = loadImage("k.png");
+    gppg = loadImage("g.png");
+    sppg = loadImage("s.png");
     
     int j = 0;
     while(j < n){
@@ -51,6 +53,7 @@ void setup() {
       v[j] = new PVector((float)xp[j], (float)yp[j]);
       if(mag(v[j].x, v[j].y) < rad){
         l[j] = new PVector((float)xp[j], (float)yp[j]);
+        d[j] = new PVector((float)xp[j], (float)yp[j]);
         j++;                 
       }
     }
@@ -65,11 +68,7 @@ void draw() {
   double value = moonlander.getValue("my_track");
   
   int m = millis();
-  //translate(x,y,z);
-  //int col = color(128*(sin((float)moon/8.0)));
   background(0);
-  //rotate(m);
- // 
   
   if(f_sel >= 1 && f_sel < 1.5){
     makeWords("GRAFFATHON 2016", 255, 255, 255, 26, 100, 100); 
@@ -83,31 +82,11 @@ void draw() {
     flyingHeads();
   }
   
-  if(f_sel >= 4 && f_sel < 5){
-    mid_rec(m, 0, 0, 1, 255);
-    side_rec(m);
-    points(v);
-    if(moon >= 1){
-      mid_rec(m, 0, 0, 3, 0);
-      lines(l, moon);
-    }
-  }
-  //side_rec(m);
-  //mid_rec(m, -150, -150);
-  //mid_rec(m, -150, 150);
-  //mid_rec(m, 150, -150);
-  //mid_rec(m, 150, 150);
-  //points(v);
-
-  
   if(f_sel >= 2 && f_sel < 3)
   {
-    //background(0);
     stroke(255);
-
-  
     translate(width/2, height/2);
-    rotate(-radians(frameCount));
+    rotate(-radians(frameCount)); 
     drawBoxes(900);
   
     drawBox2(200,200);
@@ -116,6 +95,72 @@ void draw() {
     drawBox2(-100,-200);
     drawBox2(-278,-59);
   }
+  
+  if(f_sel >= 3 && f_sel < 4)
+  {
+    lighting();
+    testiObj((float)value*0.5,(float)value);
+  } 
+  
+  if(f_sel >= 4 && f_sel < 5) {
+    mid_rec(m, 0, 0, 1, 255);
+    side_rec(m);
+    points(v, 0.992);
+    if(moon >= 1){
+      lines(l, moon, 255, 255, 255, 0.992);
+      mid_rec(m, 0, 0, 3, 0);
+    }
+  }
+  
+  if(f_sel >= 5 && f_sel < 6) {
+    points(l, 0.997);
+  
+    if(f_sel >= 5 && f_sel < 5.5) {
+      pushMatrix();
+      stroke(255);
+      translate(width/2, height/2);
+      rotate(-radians(frameCount));
+    
+      drawBox2(200,200);
+      drawBox2(-100,-100);
+      drawBox2(150,300);
+      drawBox2(-100,-200);
+      drawBox2(-278,-59);
+      popMatrix();
+    }
+  
+    if(f_sel >= 5.6 && f_sel < 6) {
+      stroke(255);
+      translate(width/2, height/2);
+      rotate(-radians(frameCount));
+      pic = 1;
+      drawBox2(200,200);
+      drawBox2(-100,-100);
+      drawBox2(150,300);
+      drawBox2(-100,-200);
+      drawBox2(-278,-59);
+      //points(l);
+    }
+  }
+  
+  if(f_sel >= 6 && f_sel < 6.5) {
+    testiObj((float)value*0.5,(float)value);
+  }
+  
+  if(f_sel >=6.5 && f_sel < 7) {
+     mid_rec(m, -500, -350, 1, 255);
+     mid_rec(m, -750, 0, 1, 255);
+     mid_rec(m, -500, 350, 1, 255);
+     mid_rec(m, 500, -350, 1, 255);
+     mid_rec(m, 750, 0, 1, 255);
+     mid_rec(m, 500, 350, 1, 255);
+
+    if(moon >= 1) {
+      lines(d, moon, 252, 222, 98, 0.5);  
+    }
+  }
+  
+  
   /*if(f_sel<-1)
   {
     double value = moonlander.getValue("my_track");
@@ -123,11 +168,7 @@ void draw() {
     fractal(width, height, kerroin);
   }*/
   
-  if(f_sel >= 3 && f_sel < 4)
-  {
-    lighting();
-    testiObj((float)value*0.5,(float)value);
-  } 
+  
   
   if(f_sel >= 7 && f_sel < 7.3){
     makeWords("I haven't let the fact that I have no idea what I'm doing slow me down one bit. - Jim Wells", 255, 255, 255, 26, 100, 100);
@@ -140,7 +181,7 @@ void mid_rec(int m, int dx, int dy, int sw, int col) {
     noFill();
     stroke(col);
     strokeWeight(sw);
-    rotate(m*30);
+    rotate(m*35);
     rect(-75,-75,150,150);
   popMatrix();
 }
@@ -155,24 +196,25 @@ void side_rec(int m) {
   popMatrix(); 
 }
 
-void points(PVector v[]){
+void points(PVector v[], float vel){
   pushMatrix();
     translate(x,y,z);
     stroke(255);
     for(int p = 0; p < n; p++){
-      v[p].mult(0.992);
+      v[p].mult(vel);
       point(v[p].x, v[p].y);
     }   
   popMatrix(); 
 }
 
-void lines(PVector v[], double m){
+void lines(PVector v[], double m, int col_r, int col_g, int col_b, float vel){
   pushMatrix();
     translate(x,y,z);
-    stroke(255);
+    stroke(col_r, col_g, col_b);
+    strokeWeight(1);
     for(int p = 0; p < n/4  ; p++) {
       v[p].setMag((int)m*400/70);
-      v[p].div(0.992);
+      v[p].div(vel);
       line(0, 0, v[p].x*-1, v[p].y*-1);
     }
   popMatrix();
@@ -200,7 +242,11 @@ void drawBox(float xx, float r, float s) {
 //    translate(x+xx,y+yy,30);
     rotateY(radians(frameCount+ r)+PI/3);
     rotateX(radians(frameCount+r)+PI/6);
-    box(50+xx/10);
+    if(pic == 0){
+      box(50+xx/10);
+    }else{
+      shape(noppa, 0, 0);
+    }
   popMatrix();
 }
 
@@ -237,7 +283,7 @@ void testiObj(float xin,double y)
     s.setVisible(true);
     pushMatrix();
     //translate(200.0+(i*x*20.0,200.0+j*x*20.0,0);
-    translate(560.0+2.5*x,400.0,0);
+    translate(560.0+2.5*x, 540.0,0);
     scale(min(1.0,(2.0/x+0.03)));
     rotateX(x);
     if(y>40)
@@ -246,7 +292,7 @@ void testiObj(float xin,double y)
     popMatrix();
     
     pushMatrix();
-    translate(1360.0-2.5*x,400.0,0);
+    translate(1360.0-2.5*x, 540.0,0);
     scale(min(1.0,(2.0/x+0.03)));
     rotateX(x);
     if(y>40)
@@ -260,7 +306,7 @@ void testiObj(float xin,double y)
   s.setVisible(false);
   s2.setVisible(true);
   pushMatrix();
-  translate(950.0,400.0,0);
+  translate(950.0, 540.0,0);
   scale(5.0);
   scale(min(1.0,(2.0/x+0.03)));
   rotateX(x);
